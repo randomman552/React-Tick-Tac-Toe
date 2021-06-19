@@ -48,6 +48,10 @@ ol, ul {
   width: var(--game-cell-size);
 }
 
+.square.highlight {
+  background: rgba(0, 255, 0, 0.3);
+}
+
 .square:focus {
   outline: none;
 }
