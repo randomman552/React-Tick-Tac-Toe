@@ -4,7 +4,8 @@ import './index.css';
 
 
 function checkLine(line, squares) {
-        let val = squares[line[0]];
+        const val = squares[line[0]];
+        if (val == null) return false;
         for (const i of line.slice(1)) {
             if (squares[i] !== val) return false;
         }
@@ -102,7 +103,7 @@ class Game extends React.Component {
 
     handleClick(i) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = this.state.history[history.length - 1];
+        const current = history[this.state.stepNumber];
         const squares = current.squares.slice();
         if (calculateWinner(squares) || squares[i]) return;
 
@@ -127,14 +128,15 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
+        const draw = isDraw(current.squares);
+        const winner = calculateWinner(current.squares);
 
         let status;
-        if (isDraw(current.squares)) {
-            status = 'Draw';
+        if (winner) {
+            status = 'Winner: ' + winner;
         } else {
-            const winner = calculateWinner(current.squares);
-            if (winner) {
-                status = 'Winner: ' + winner;
+            if (draw) {
+                status = 'Draw';
             } else {
                 status = 'Next player: ' + (this.state.xNext ? 'X' : 'O');
             }
