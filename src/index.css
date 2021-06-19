@@ -1,10 +1,25 @@
+:root {
+  --body-margin: 50px;
+  --title-height: 50px;
+  --game-grid-size: calc(100vh - (var(--body-margin) * 2 + var(--title-height)));
+  --game-cell-size: calc(var(--game-grid-size) / 3);
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  margin: var(--body-margin);
+  overflow: hidden;
 }
 
 ol, ul {
   padding-left: 30px;
+}
+
+.title {
+  margin: 0 0 5px 0;
+  border-bottom: 1px solid #999999;
+  line-height: calc(var(--title-height) - 5px);
+  font-size: calc(var(--title-height) - 5px);
 }
 
 .board-row:after {
@@ -21,15 +36,15 @@ ol, ul {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: var(--game-cell-size);
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
+  line-height: var(--game-cell-size);
+  height: var(--game-cell-size);
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: var(--game-cell-size);
 }
 
 .square:focus {
@@ -42,9 +57,23 @@ ol, ul {
 
 .game {
   display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  display: flex;
   flex-direction: row;
 }
 
+.game-board {
+  float: left;
+  height: var(--game-grid-size);
+  width: 50%;
+}
+
 .game-info {
-  margin-left: 20px;
+  margin: 20px;
+  text-align: right;
+  float: right;
+  width: 50%;
 }
