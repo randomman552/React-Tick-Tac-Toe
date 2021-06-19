@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: React app deployement
 
 on:
   push:
@@ -8,26 +8,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 14.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: Set GitHub Identity
-        run: git config user.name github-actions && git config user.email github-actions@github.com
-        shell: bash
-
-      - name: Install Packages
-        run: npm install
-
-      - name: Deploy page
-        run: npm run deploy
+      - name: Deploy react app to github pages
+        uses: tanwanimohit/deploy-react-to-ghpages@v1.0.1
