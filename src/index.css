@@ -1,7 +1,7 @@
 :root {
   --body-margin: 50px;
   --title-height: 50px;
-  --desired-game-grid-size-y: calc(100vh - (var(--body-margin) * 2 + var(--title-height)));
+  --desired-game-grid-size-y: calc(100vh - var(--body-margin) * 2 - var(--title-height));
   --desired-game-grid-size-x: calc(100vw - var(--body-margin) * 2);
   --game-grid-size: min(var(--desired-game-grid-size-x), var(--desired-game-grid-size-y));
   --game-cell-size: calc(var(--game-grid-size) / 3);
