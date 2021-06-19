@@ -1,14 +1,15 @@
 :root {
   --body-margin: 50px;
   --title-height: 50px;
-  --game-grid-size: calc(100vh - (var(--body-margin) * 2 + var(--title-height)));
+  --desired-game-grid-size-y: calc(100vh - (var(--body-margin) * 2 + var(--title-height)));
+  --desired-game-grid-size-x: calc(100vw - var(--body-margin) * 2);
+  --game-grid-size: min(var(--desired-game-grid-size-x), var(--desired-game-grid-size-y));
   --game-cell-size: calc(var(--game-grid-size) / 3);
 }
 
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: var(--body-margin);
-  overflow: hidden;
 }
 
 ol, ul {
@@ -63,12 +64,13 @@ ol, ul {
 .game-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .game-board {
   float: left;
   height: var(--game-grid-size);
-  width: 50%;
+  min-width: var(--game-grid-size);
 }
 
 .game-info {
@@ -78,7 +80,8 @@ ol, ul {
   flex-direction: column;
   align-items: center;
   float: right;
-  width: 50%;
+  flex-grow: 1;
+  flex-basis: 200px;
 }
 
 .game-info > .status {
