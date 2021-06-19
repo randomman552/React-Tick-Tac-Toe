@@ -36,6 +36,13 @@ function calculateWinner(squares) {
         return null;
     }
 
+function isDraw(squares) {
+    for (const square of squares) {
+        if (square == null) return false;
+    }
+    return true;
+}
+
 
 function Square(props) {
     return (
@@ -119,26 +126,33 @@ class Game extends React.Component {
 
     render() {
         const history = this.state.history;
-        const current = history[this.state.stepNumber]
-        const winner = calculateWinner(current.squares)
+        const current = history[this.state.stepNumber];
 
         let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
+        if (isDraw(current.squares)) {
+            status = 'Draw';
         } else {
-            status = 'Next player: ' + (this.state.xNext ? 'X' : 'O');
+            const winner = calculateWinner(current.squares);
+            if (winner) {
+                status = 'Winner: ' + winner;
+            } else {
+                status = 'Next player: ' + (this.state.xNext ? 'X' : 'O');
+            }
         }
 
         const moves = history.map((step, move) => {
-            const desc = move ?
-                'Go to move #' + move :
-                'Go to game start';
+            const desc = 'Go to #' + move;
             return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                </li>
-            )
-        })
+                <tr key={move}>
+                    <td headers="move-number">
+                        {move}
+                    </td>
+                    <td headers="state">
+                        <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    </td>
+                </tr>
+            );
+        });
 
         return (
         <div className="game">
@@ -151,8 +165,16 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <div className="status">{status}</div>
+                    <table className="moves">
+                        <thead>
+                            <th id="move-number">Move no.</th>
+                            <th id="state">State</th>
+                        </thead>
+                        <tbody>
+                            {moves}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
