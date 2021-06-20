@@ -23,12 +23,6 @@ ol, ul {
   font-size: calc(var(--title-height) - 5px);
 }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
 .status {
   margin-bottom: 10px;
 }
@@ -93,5 +87,29 @@ ol, ul {
 }
 
 .game-info > .moves {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+}
+
+.game-info > .moves .move-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.game-info > .moves .move-preview .move-jump {
+  margin: 2px;
+}
+
+.game-info > .moves .move-preview .square{
+  height: 34px;
+  width: 34px;
+  font-size: 34px;
+  line-height: 34px;
 }

@@ -55,7 +55,11 @@ function Square(props) {
 
 class Board extends React.Component {
     renderSquare(i) {
-        let highlight = this.props.highlighted.indexOf(i) !== -1;
+        let highlight;
+        if (this.props.highlighted) {
+            highlight = this.props.highlighted.indexOf(i) !== -1;
+        }
+
         return <Square
             highlight={ highlight }
             value={ this.props.squares[i] }
@@ -138,6 +142,27 @@ class Game extends React.Component {
         });
     }
 
+    renderHistory() {
+        const history = this.state.history;
+        return history.map((step, move) => {
+            const desc = 'Go to move #' + move;
+            const squares = history[move].squares;
+
+            let winState = calculateWinState(squares, this.state.winningLines);
+            let highlightedSquares = (winState) ? winState.winningLine.slice(): [];
+            return (
+                <div className="move-preview" key={move}>
+                    <button className="move-jump" onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <Board
+                        squares={ squares }
+                        onClick={ (i) => {} }
+                        highlighted={ highlightedSquares }
+                    />
+                </div>
+            );
+        });
+    }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
@@ -158,19 +183,7 @@ class Game extends React.Component {
             }
         }
 
-        const moves = history.map((step, move) => {
-            const desc = 'Go to #' + move;
-            return (
-                <tr key={move}>
-                    <td headers="move-number">
-                        {move}
-                    </td>
-                    <td headers="state">
-                        <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                    </td>
-                </tr>
-            );
-        });
+        const moves = this.renderHistory();
 
         return (
         <div className="game">
@@ -185,15 +198,9 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div className="status">{status}</div>
-                    <table className="moves">
-                        <thead>
-                            <th id="move-number">Move no.</th>
-                            <th id="state">State</th>
-                        </thead>
-                        <tbody>
-                            {moves}
-                        </tbody>
-                    </table>
+                    <div className="moves">
+                        {moves}
+                    </div>
                 </div>
             </div>
         </div>
